@@ -61,6 +61,9 @@ $ cat /etc/hosts
 $ rabbitmqctl cluster_status
 ```
 
+![image](https://user-images.githubusercontent.com/106932460/228061517-c740250e-aaaa-4949-8f1a-1f885b4d8e03.png)
+![image](https://user-images.githubusercontent.com/106932460/228061739-1f4dd8c0-3754-4e74-8c23-a38d760b3508.png)
+
 Для закрепления материала снова запустите скрипт producer.py и приложите скриншот выполнения команды на каждой из нод:
 
 ```shell script

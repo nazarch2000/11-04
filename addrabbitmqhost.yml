@@ -1,0 +1,45 @@
+- name: set up rabbitmq 
+  hosts: rabbitmq_servers
+  become: yes
+
+  vars:
+    master_server: rabbit@terraform
+    erlang_cookie: HBIOXXQFKFPRTLJJTXLB
+
+  tasks:
+   
+  - name: add to hosts
+    lineinfile: dest=/etc/hosts line="{{ hostvars[item]['ansible_default_ipv4']['address']}} {{item}}" state=present
+    with_items:
+     - "{{ groups['rabbitmq_servers'] }}"
+
+  - name: install rabbitmq
+    script: /etc/ansible/install_rabbitmq.sh 
+
+  - name: add plugins
+    shell: rabbitmq-plugins enable rabbitmq_management
+
+  - name: config rabbitmq
+    shell: echo '[{rabbit, [{loopback_users, []}]}].' > /etc/rabbitmq/rabbitmq.config   
+ 
+  - name: erlang cookie
+    shell: echo {{ erlang_cookie }} > /var/lib//rabbitmq/.erlang.cookie      
+
+  - name: owner of file cookie
+    file: 
+     path: /var/lib/rabbitmq/.erlang.cookie
+     owner: rabbitmq
+     group: rabbitmq
+     mode: '400'
+
+  - name: restart rabbitmq
+    service:
+     name: rabbitmq-server
+     state: restarted
+
+  - name: create politics
+    shell: rabbitmqctl set_policy ha-all "" '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+
+  - name: add to cluster
+    shell: rabbitmqctl stop_app; rabbitmqctl join_cluster {{ master_server }}; rabbitmqctl start_app; rabbitmqctl cluster_status
+    

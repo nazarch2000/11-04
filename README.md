@@ -90,3 +90,5 @@ $ rabbitmqadmin get queue='hello'
 
 ![image](https://user-images.githubusercontent.com/106932460/230145696-2cb8ddb4-23bd-4755-a3bb-2658640d9e7c.png)
 ![image](https://user-images.githubusercontent.com/106932460/230145773-515066d2-359e-4e9d-bb36-dcafb677ce0d.png)
+![image](https://user-images.githubusercontent.com/106932460/230145894-f16a6369-3bbe-4159-a9d7-d62ecd5eddfc.png)
+
